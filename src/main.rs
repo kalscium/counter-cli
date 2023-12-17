@@ -1,3 +1,7 @@
+use clap::Parser;
+use counter_cli::cli::Cli;
+
+#[inline]
 fn main() {
-    println!("Hello, world!");
+    Cli::parse().run();
 }

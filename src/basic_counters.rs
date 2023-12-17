@@ -2,6 +2,8 @@ use std::io::{self, Write};
 
 use crossterm::cursor;
 
+use crate::loading_bar::LoadingBar;
+
 pub struct BasicCounter {
     total: Option<u32>,
     current: u32,
@@ -54,7 +56,10 @@ impl BasicCounter {
                 None => String::new(),
             },
             match self.total {
-                Some(_) => format!("\x1b[34m, \x1b[33m{:.2}%, \x1b[34m, \x1b[36;1meta: \x1b[0m\x1b[33m{:.2}s", percent.unwrap(), eta.unwrap()),
+                Some(_) => format!("\x1b[34m, \x1b[33m{:.2}%{}", percent.unwrap(), match eta {
+                    Some(eta) => format!("\x1b[34m, \x1b[36;1meta: \x1b[0m\x1b[33m{:.2}", LoadingBar::right_time_unit(eta)),
+                    None => String::new(),
+                }),
                 None => String::new(),
             },
         ).unwrap();

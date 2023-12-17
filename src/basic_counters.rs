@@ -33,7 +33,7 @@ impl BasicCounter {
     }
 
     /// Draws the counter as raw data
-    pub fn draw_data(&self) {
+    pub fn draw_data(&self, description: &str) {
         let mut stdout = io::stdout();
 
         let percent = self.total.map(|total| self.current as f32 * 100.0 / total as f32);
@@ -44,7 +44,7 @@ impl BasicCounter {
 
         write!(
             stdout,
-            "\x1b[34m( \x1b[33m{}{}{}\x1b[34m )",
+            "\x1b[36;1minfo: \x1b[0m{description}... \x1b[34m( \x1b[33m{}{}{}\x1b[34m )",
             match self.total {
                 Some(total) => format!("{}\x1b[34m/\x1b[33m{total}", self.current),
                 None => self.current.to_string(),
@@ -63,8 +63,8 @@ impl BasicCounter {
     }
 
     /// Draws the data as tally marks
-    pub fn draw_tally(&self) {
-        self.draw_data();
+    pub fn draw_tally(&self, description: &str) {
+        self.draw_data(description);
 
         // wipe the lines that were previously drawn
         print!("\n{}{}{}", cursor::MoveToColumn(0), self.buffer, cursor::MoveToColumn(0));

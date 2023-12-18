@@ -30,7 +30,7 @@ impl BasicCounter {
         self.current += clamped;
         self.avg = match self.avg {
             Some(avg) => Some((avg + clamped as f32 / s_elapsed) / 2.0),
-            None => Some(clamped as f32),
+            None => Some(clamped as f32 / s_elapsed),
         }; self.current == self.total.unwrap_or(u32::MAX)
     }
 
@@ -57,7 +57,7 @@ impl BasicCounter {
             },
             match self.total {
                 Some(_) => format!("\x1b[34m, \x1b[33m{:.2}%{}", percent.unwrap(), match eta {
-                    Some(eta) => format!("\x1b[34m, \x1b[36;1meta: \x1b[0m\x1b[33m{:.2}", LoadingBar::right_time_unit(eta)),
+                    Some(eta) => format!("\x1b[34m, \x1b[36;1meta: \x1b[0m\x1b[33m{}", LoadingBar::right_time_unit(eta)),
                     None => String::new(),
                 }),
                 None => String::new(),

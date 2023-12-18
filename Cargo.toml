@@ -1,6 +1,6 @@
 [package]
 name = "counter-cli"
-version = "0.5.1"
+version = "0.5.2"
 edition = "2021"
 description = "A simple cli for counting- anything."
 license = "GPL-3.0-or-later"

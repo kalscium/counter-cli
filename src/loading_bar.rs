@@ -58,7 +58,7 @@ impl LoadingBar {
             self.current,
             self.total,
             match self.avg {
-                Some(avg) => format!(" \x1b[33m{:.2}/s \x1b[34m| \x1b[36meta\x1b[34m: \x1b[33m{} \x1b[34m|\x1b[0m", avg, Self::right_time_unit(eta)),
+                Some(avg) => format!(" \x1b[33m{} \x1b[34m| \x1b[36meta\x1b[34m: \x1b[33m{} \x1b[34m|\x1b[0m", Self::right_avg_unit(avg), Self::right_time_unit(eta)),
                 None => String::new(),
             },
         ).unwrap();
@@ -85,6 +85,16 @@ impl LoadingBar {
             format!("{:.2}min", seconds / 60.0)
         } else {
             format!("{:.2}h", seconds / 3600.0)
+        }
+    }
+
+    /// Gets the apropriate display of the average speed
+    #[inline]
+    pub fn right_avg_unit(avg: f32) -> String {
+        if avg < 1.0 {
+            format!("{}/i", Self::right_time_unit(1.0 / avg))
+        } else {
+            format!("{:.2}i/s", avg)
         }
     }
 }

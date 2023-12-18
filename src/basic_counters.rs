@@ -52,7 +52,7 @@ impl BasicCounter {
                 None => self.current.to_string(),
             },
             match self.avg {
-                Some(avg) => format!("\x1b[34m, \x1b[33m{avg:.2}/s"),            
+                Some(avg) => format!("\x1b[34m, \x1b[33m{}", LoadingBar::right_avg_unit(avg)),            
                 None => String::new(),
             },
             match self.total {
